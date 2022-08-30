@@ -4,10 +4,7 @@ const provider = new ethers.providers.getDefaultProvider(
   process.env.PROVIDER_URL,
 )
 
-const {
-  signWithdrawToken,
-  signWithdrawNFT,
-} = require('../helper-sign')
+const { signWithdrawToken, signWithdrawNFT } = require('../helper-sign')
 ///ABI
 
 const ADDRESSES_FILE = require('../addresses/rinkeby_address.json')
@@ -31,8 +28,7 @@ const toomicsUser = new ethers.Contract(
   userAccount,
 )
 
-let nonces = []
-nonces[userWallet.address] = 1
+let nonce = 0
 
 async function main() {
   //SCRIPT
@@ -44,7 +40,7 @@ async function main() {
     4, //chainId
     toomicsUser.address,
     backendWallet,
-    nonces,
+    // nonces,
     userWallet.address,
     1,
     9999,
@@ -54,7 +50,7 @@ async function main() {
 
   estimate = await toomicsUser.estimateGas.withdrawToken(
     [sign],
-    nonces[userWallet.address],
+    nonce,
     1,
     9999,
     ADDRESSES_FILE.tmrToken,
@@ -69,7 +65,7 @@ async function main() {
     4, //chainId
     toomicsUser.address,
     backendWallet,
-    nonces,
+    // nonces,
     userWallet.address,
     1,
     9999,
@@ -79,7 +75,7 @@ async function main() {
   )
   estimate = await toomicsUser.estimateGas.withdrawNFT(
     [sign],
-    nonces[userWallet.address],
+    nonce,
     1,
     9999,
     [10, 11],

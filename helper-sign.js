@@ -2,14 +2,14 @@ const signWithdrawToken = async (
   chainId,
   verifyingContract,
   signer,
-  nonces,
+  // nonce,
   userAddress,
   userId,
   withdrawRequestId,
   tokenAddress,
   amount,
 ) => {
-  nonces[userAddress]++
+  nonce++
 
   let sig = await signer._signTypedData(
     {
@@ -29,7 +29,7 @@ const signWithdrawToken = async (
       ],
     },
     {
-      nonce: nonces[userAddress],
+      nonce,
       userAddress,
       userId,
       withdrawRequestId,
@@ -45,7 +45,7 @@ const signWithdrawNFT = async (
   chainId,
   verifyingContract,
   signer,
-  nonces,
+  // nonce,
   userAddress,
   userId,
   withdrawRequestId,
@@ -53,7 +53,7 @@ const signWithdrawNFT = async (
   nftAddress,
   tokenIds,
 ) => {
-  nonces[userAddress]++
+  nonce++
 
   let sig = await signer._signTypedData(
     {
@@ -74,7 +74,7 @@ const signWithdrawNFT = async (
       ],
     },
     {
-      nonce: nonces[userAddress],
+      nonce,
       userAddress,
       userId,
       withdrawRequestId,
